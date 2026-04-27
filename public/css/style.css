@@ -1,0 +1,373 @@
+/* --- VARIABLES & THÈME --- */
+:root {
+    --primary: #2563eb;    
+    --secondary: #475569;  
+    --bg-sidebar: #0f172a; 
+    --bg-main: #f0f2f5;    
+    --bg-card: #ffffff;    
+    --text-dark: #1e293b;  
+    --text-light: #64748b; 
+    --success: #10b981;    
+    --danger: #ef4444;     
+    --radius: 12px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+    
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- 1. SIDEBAR (Menu) --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--bg-sidebar);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100%;
+    z-index: 1000; 
+    transition: width 0.3s ease;
+    border-right: 1px solid #223;
+}
+.brand { height: 70px; display: flex; align-items: center; padding: 0 24px; font-size: 1.25rem; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1); letter-spacing: 0.5px; }
+.brand i { color: var(--primary); margin-right: 12px; font-size: 1.4rem; }
+.nav-menu { flex: 1; padding: 20px 12px; list-style: none; }
+.nav-item { margin-bottom: 4px; }
+.nav-link { display: flex; align-items: center; padding: 12px 16px; color: var(--text-light); text-decoration: none; border-radius: 8px; transition: all 0.2s; font-size: 0.95rem; font-weight: 500; }
+.nav-link:hover, .nav-link.active { background-color: rgba(255,255,255,0.08); color: white; }
+.nav-link.active { border-left: 3px solid var(--primary); }
+.nav-link i { margin-right: 12px; width: 20px; text-align: center; }
+    
+/* --- 2. MAIN CONTENT & MAP --- */
+.main-content {
+    flex: 1;
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Map Header (Barre d'état) */
+header {
+    display: flex; align-items: center; gap: 12px; padding: 10px 16px; 
+    background-color: var(--bg-card); 
+    border-bottom: 1px solid #e2e8f0;
+    height: 56px;
+    color: var(--text-dark);
+    position: relative;
+    z-index: 800; /* ensure header sits above floating control bar */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+header h1{font-size:18px; margin:0; letter-spacing:0.3px}
+header .right{margin-left:auto; display:flex; gap:12px; align-items:center}
+#statusDot{width:10px; height:10px; border-radius:50%; background:var(--danger); box-shadow:0 0 0 2px rgba(0,0,0,0.1)}
+
+/* Map Area */
+.mapWrap{
+    flex: 1;
+    position:relative;
+}
+#map{height:100%; width:100%}
+
+/* --- 3. TOP CONTROLS BAR (MODERNE ET FLOTTANT) --- */
+.top-controls-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 500; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Style général des Cartes de contrôle */
+.control-card {
+    background: var(--bg-card); 
+    border: 1px solid #e2e8f0; 
+    border-radius: 10px;
+    padding: 10px 15px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+/* Contenu des filtres (select/input) */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 120px;
+}
+.filter-group label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-light);
+    text-transform: uppercase;
+}
+.filter-group select, .filter-group input {
+    padding: 6px 8px;
+    background: #f1f5f9; 
+    color: var(--text-dark);
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    height: 32px; /* Uniformiser la hauteur */
+}
+.filter-group select {
+    cursor: pointer;
+}
+
+/* KPI Display */
+.kpi-card {
+    flex-direction: row;
+    gap: 15px;
+    min-width: 180px;
+}
+.kpi-card h3{
+    margin:0; 
+    font-size:11px; 
+    color:var(--text-light);
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.kpi-card .big{
+    font-size: 1.8rem; 
+    font-weight: 700; 
+    color: var(--primary);
+}
+.kpi-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Style du bouton (Recentrer) */
+.control-card button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.control-card button:hover { background-color: #1d4ed8; }
+
+/* Checkbox au lieu de Select (Avions au Sol) */
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-dark);
+}
+    
+/* Tooltip */
+.tooltip{position:absolute; pointer-events:none; background:var(--bg-card); border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; color:var(--text-dark); font-size:12px; transform:translate(-50%, -120%); white-space:nowrap; z-index: 500;}
+
+/* Icones Avion (Conservé) */
+.custom-plane-icon i.fa-plane {
+    font-size: 16px; 
+    position: absolute; top: 50%; left: 50%; 
+    transform: translate(-50%, -50%); 
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+}
+.custom-plane-icon i.speed-low { color: var(--success); }
+.custom-plane-icon i.speed-mid { color: #f97316; }
+.custom-plane-icon i.speed-high { color: var(--danger); }
+
+/* Loader CSS */
+.loader-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.7); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 600; 
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity 0.3s ease;
+}
+.loader-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.loader-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* Media Queries */
+@media (max-width: 1000px) {
+    .top-controls-bar {
+        flex-direction: column;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+    .control-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+    .filter-group {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 768px) {
+    .sidebar { width: 0; padding: 0; overflow: hidden; } 
+    .main-content { margin-left: 0; width: 100%; }
+}
+
+/* Header quick-nav buttons shown in top-right */
+.header-buttons { display:flex; gap:8px; align-items:center; }
+.header-btn {
+    margin-right:12px;
+    text-decoration:none;
+    color: var(--text-dark);
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    font-weight: 600;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+.header-btn:hover { background: #f1f5f9; }
+.header-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+/* Hide the top header bar on pages that opt-in */
+body.hide-top-header header {
+    display: none;
+}
+
+/* Ensure main-content fills (no leftover header space) when header hidden */
+body.hide-top-header .main-content {
+    /* Force a stable viewport-sized container and prevent page scrolling/layout shifts */
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* On pages that hide the header (live map), keep the map area fixed to viewport
+   so controls overlay without pushing content and the page doesn't reflow. */
+body.hide-top-header .mapWrap {
+    height: 100vh; /* map covers the whole main-content area; controls are absolute overlays */
+}
+
+/* Chart container wrapper to ensure padding inside cards */
+.card canvas { background: transparent; padding: 6px 0; display: block; width: 100% !important; }
+
+/* Make small KPI areas not reflow when chart legends change */
+.card .chart-legend, .card .chart-controls { min-height: 40px; }
+
+.chart-full-width {
+    grid-column: span 3; /* Make the chart span 3 columns */
+    min-height: 300px; /* Give it a reasonable minimum height for the card */
+}
+
+.chart-full-width canvas {
+    height: 250px !important; /* Explicitly set height for chart canvas */
+}
+
+/* --- DASHBOARD / CARDS (global) --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 8px;
+}
+
+.kpi-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--secondary);
+    text-transform: uppercase;
+}
+
+@media (max-width: 1200px) {
+    .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+/* Dashboard refinements */
+.card h3 { font-size: 1.05rem; margin-bottom: 10px; color: var(--text-dark); }
+.kpi-card { padding: 18px; align-items: flex-start; }
+.kpi-card .kpi-info { gap: 4px; }
+.kpi-card .big, .metric-value { font-size: 2.2rem; }
+.kpi-sub { color: var(--text-light); font-size: 0.9rem; margin-top:6px }
+
+.dashboard-grid .card { min-height: 110px; }
+
+/* Filter controls styling for dashboard */
+#filterAirline, #filterCountry, #filterMinSpeed {
+    min-width: 160px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+}
+
+.btn-action {
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+
+/* Slightly darker dashboard background to separate from map pages */
+body .main-content { background: transparent; }

@@ -1,0 +1,19 @@
+{
+  "name": "projet_script",
+  "version": "1.0.0",
+  "description": "",
+  "main": "air_traffic_logger.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2",
+    "socket.io": "^4.8.1",
+    "sqlite3": "^5.1.6"
+  }
+}
