@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SkyVis Pro — Historique</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="hide-top-header">
+<aside class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-plane-departure"></i> <span>SkyVis Pro</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="aviation-dashboard.html" class="nav-link">
+                    <i class="fa-solid fa-chart-pie"></i> Tableau de bord
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="scrapping/index.html" class="nav-link">
+                    <i class="fa-solid fa-plane"></i> Vols en temps réel
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="scrapping/../aviation-live-dashboard.html" class="nav-link">
+                    <i class="fa-solid fa-tachometer-alt"></i> Tableau de bord LIVE
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="aviation-historical.html" class="nav-link active">
+                    <i class="fa-solid fa-clock"></i> Historique des vols
+                </a>
+            </li>
+        </ul>
+    </aside> 
+
+  <main class="main-content">
+    <header>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 12l20-6-5 14-5-4-5 4V8" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h1 id="map-mode-title">Historique — SkyVis Pro</h1>
+      <div class="right">
+        <div id="statusDot" title="Status"></div>
+        <div class="muted" id="lastUpdate">—</div>
+      </div>
+    </header>
+
+    <div class="top-controls-bar">
+      <div class="control-card kpi-card">
+        <div class="kpi-info">
+            <h3>Avions visibles</h3>
+            <div class="big" id="kpiNow">—</div>
+        </div>
+        <span class="muted" id="kpiNowHint">Source: <span id="current-data-source">HISTORIQUE</span></span>
+      </div>
+
+      <div class="control-card">
+        <div class="filter-group">
+          <label for="histFileSelect">Sélectionner l'instant</label>
+          <select id="histFileSelect"><option>Chargement...</option></select>
+        </div>
+        <div style="margin-left:10px; display:flex; align-items:center">
+          <button id="loadHistBtn">Charger</button>
+        </div>
+      </div>
+
+      <div class="control-card">
+        <div class="filter-group">
+            <label for="countrySelect">Pays d'origine</label>
+            <select id="countrySelect"><option value="">Tous</option></select>
+        </div>
+        <div class="filter-group">
+            <label for="airlineFilter">Compagnie Aérienne</label>
+            <select id="airlineFilter"><option value="">Toutes</option></select>
+        </div>
+        <div class="filter-group">
+            <label for="minSpeed">Vitesse Min (km/h)</label>
+            <select id="minSpeed">
+                <option value="0">0 (Tous)</option>
+                <option value="300">300 km/h</option>
+                <option value="700">700 km/h</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="minAlt">Altitude min (m)</label>
+            <select id="minAlt">
+                <option value="0">0</option>
+                <option value="3000">3 000</option>
+                <option value="6000">6 000</option>
+                <option value="9000">9 000</option>
+            </select>
+        </div>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="showGround" checked> Afficher avions au sol</label>
+        </div>
+        <div>
+            <button id="fitBtn"><i class="fa-solid fa-arrows-to-dot"></i> Recentrer</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="mapWrap">
+      <div id="map" role="region" aria-label="Carte historique des avions"></div>
+      <div id="loaderOverlay" class="loader-overlay hidden"><div class="loader-spinner"></div></div>
+      <div id="tooltip" class="tooltip hidden"></div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin></script>
+  <script src="https://d3js.org/d3-dsv.v2.min.js"></script>
+  <script src="js/aviation-historical.js"></script>
+</body>
+</html>

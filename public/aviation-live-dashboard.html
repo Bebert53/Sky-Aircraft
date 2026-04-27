@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SkyVis Pro — Dashboard Live</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="hide-top-header">
+<aside class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-plane-departure"></i> <span>SkyVis Pro</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="aviation-dashboard.html" class="nav-link">
+                    <i class="fa-solid fa-chart-pie"></i> Tableau de bord
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="scrapping/index.html" class="nav-link">
+                    <i class="fa-solid fa-plane"></i> Vols en temps réel
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="scrapping/../aviation-live-dashboard.html" class="nav-link active">
+                    <i class="fa-solid fa-tachometer-alt"></i> Tableau de bord LIVE
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="aviation-historical.html" class="nav-link">
+                    <i class="fa-solid fa-clock"></i> Historique des vols
+                </a>
+            </li>
+        </ul>
+    </aside> 
+
+  <main class="main-content">
+    <header>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 12l20-6-5 14-5-4-5 4V8" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h1 id="map-mode-title">Tableau de bord — Données Live</h1>
+      <div class="right">
+        <div id="statusDot" title="Status"></div>
+        <div class="muted" id="lastUpdate">—</div>
+      </div>
+    </header>
+
+    <section style="padding:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:12px; flex-wrap:wrap">
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+          <label style="font-weight:600; color:var(--secondary);">Filtrer:</label>
+          <select id="filterAirline" style="padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0;
+                   background:#fff;">
+            <option value="">Toutes les compagnies</option>
+          </select>
+          <select id="filterCountry" style="padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0; background:#fff;">
+            <option value="">Tous les pays</option>
+          </select>
+          <select id="filterMinSpeed" style="padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0; background:#fff;">
+            <option value="0">Vitesse min: 0</option>
+            <option value="200">200 km/h</option>
+            <option value="400">400 km/h</option>
+            <option value="700">700 km/h</option>
+          </select>
+          <label style="display:flex; align-items:center; gap:6px; font-size:0.95rem; color:var(--text-light)"><input id="filterShowGround" type="checkbox" checked>Afficher au sol</label>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center">
+          <!-- refresh and lastSync shown here -->
+          <div style="font-size:0.95rem; color:var(--text-light)">Données: <span id="lastSync">—</span></div>
+          <div>
+            <button id="refreshServerBtn" class="btn-action" style="background:#fff; color:var(--primary); border:1px solid #e2e8f0;">🔄 Rafraîchir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card kpi-card">
+          <div class="kpi-header"><span class="kpi-title">Avions visibles</span></div>
+          <div class="metric-value" id="kpiTotal">—</div>
+        </div>
+
+        <div class="card kpi-card">
+          <div class="kpi-header"><span class="kpi-title">Avions au sol</span></div>
+          <div class="metric-value" id="kpiOnGround">—</div>
+          <div class="metric-delta" id="kpiPctGround">—%</div>
+        </div>
+
+
+
+        <div class="card kpi-card">
+          <div class="kpi-header"><span class="kpi-title">Altitude moyenne (m)</span></div>
+          <div class="metric-value" id="kpiAvgAlt">—</div>
+        </div>
+      </div>
+
+      <div class="card chart-full-width">
+        <h3 style="margin:0 0 8px 0">Top 5 Compagnies (volume)</h3>
+        <canvas id="chartTopAirlines" width="400" height="160"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://d3js.org/d3-dsv.v2.min.js"></script>
+  <script src="js/live-dashboard.js"></script>
+</body>
+</html>
